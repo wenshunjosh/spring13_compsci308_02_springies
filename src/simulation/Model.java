@@ -18,6 +18,8 @@ public class Model {
     // simulation state
     private List<Mass> myMasses;
     private List<Spring> mySprings;
+    private GravityForce myGravity;
+    private ViscuosityForce myViscuosity;
 
     /**
      * Create a game of the given size with the given display for its shapes.
@@ -28,6 +30,14 @@ public class Model {
         mySprings = new ArrayList<Spring>();
     }
 
+    public void setGravity(GravityForce g)
+    {
+    	myGravity=g;
+    }
+    public void setViscuosity(ViscuosityForce v)
+    {
+    	myViscuosity=v;
+    }
     /**
      * Draw all elements of the simulation.
      */
@@ -49,7 +59,7 @@ public class Model {
             s.update(elapsedTime, bounds);
         }
         for (Mass m : myMasses) {
-            m.update(elapsedTime, bounds);
+            m.update(elapsedTime, bounds, myGravity, myViscuosity);
         }
     }
 

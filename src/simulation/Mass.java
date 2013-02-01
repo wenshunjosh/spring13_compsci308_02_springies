@@ -34,9 +34,8 @@ public class Mass extends Sprite {
     /**
      * XXX.
      */
-    @Override
-    public void update (double elapsedTime, Dimension bounds) {
-        applyForce(getBounce(bounds));
+    public void update (double elapsedTime, Dimension bounds, GravityForce g, ViscuosityForce v) {
+        applyForce(getBounce(bounds), g, v);
         // convert force back into Mover's velocity
         getVelocity().sum(myAcceleration);
         myAcceleration.reset();
@@ -64,7 +63,7 @@ public class Mass extends Sprite {
     	}
     	if (v!=null)
     	{
-    		Vector viscuosityForce=new Vector(v.getMagnitude()*-1, myAcceleration.getDirection());
+    		Vector viscuosityForce=new Vector(v.getMagnitude(), myAcceleration.getDirection());
     		myAcceleration.sum(viscuosityForce);
     	}
         myAcceleration.sum(force);

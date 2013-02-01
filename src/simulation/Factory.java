@@ -16,8 +16,8 @@ public class Factory {
     // data file keywords
     private static final String MASS_KEYWORD = "mass";
     private static final String SPRING_KEYWORD = "spring";
-    private static final String CENTER_OF_MASS_KEYWORD="centermass";
-    private static final String WALL_REPULSION_KEYWORD="wall";
+    private static final String GRAVITY_KEYWORD="gravity";
+    private static final String VISCUOSITY_KEYWORD="viscosity";
 
     // mass IDs
     Map<Integer, Mass> myMasses = new HashMap<Integer, Mass>();
@@ -26,7 +26,7 @@ public class Factory {
     /**
      * XXX.
      */
-    public void loadModel (Model model, File modelFile) {
+    public void loadModel (Model model, File modelFile, File modelFile2) {
         try {
             Scanner input = new Scanner(modelFile);
             while (input.hasNext()) {
@@ -39,10 +39,6 @@ public class Factory {
                     else if (SPRING_KEYWORD.equals(type)) {
                         model.add(springCommand(line));
                     }
-                    else
-                    {
-                    	//check for cm and wr, set them up in the model
-                    }
                 }
             }
             input.close();
@@ -50,6 +46,28 @@ public class Factory {
         catch (FileNotFoundException e) {
             // should not happen because File came from user selection
             e.printStackTrace();
+        }
+        try {
+        	Scanner input =new Scanner(modelFile2);
+        	while (input.hasNextLine())
+        	{
+        		String line=input.nextLine();
+        		String[] commands=line.split("");
+        		if (commands[0].equals(GRAVITY_KEYWORD))
+        		{
+        			GravityForce g=new GravityForce(Double.parseDouble(commands[2]), Double.parseDouble(commands[1]));
+        			model.setGravity(g);
+        		}
+        		else if (commands[0].equals(VISCUOSITY_KEYWORD))
+        		{
+        			ViscuosityForce v=new ViscuosityForce(Double.parseDouble(commands[1]));
+        			model.setViscuosity(v);
+        		}
+        	}
+        }
+        catch (FileNotFoundException e)
+        {
+        	e.printStackTrace();
         }
     }
 
