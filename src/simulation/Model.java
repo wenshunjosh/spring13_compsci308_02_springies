@@ -74,6 +74,8 @@ public class Model {
      * Add given spring to this simulation.
      */
     public void add (Spring spring) {
+    	spring.setGravity(myGravity);
+    	spring.setViscuosity(myViscuosity);
         mySprings.add(spring);
     }
 }

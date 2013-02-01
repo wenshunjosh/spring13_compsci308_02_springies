@@ -58,12 +58,12 @@ public class Mass extends Sprite {
     public void applyForce (Vector force, GravityForce g, ViscuosityForce v) {
     	if (g!=null)
     	{
-    		Vector gravityForce=new Vector(g.getMagnitude()*myMass, g.getAngle());
+    		Vector gravityForce=new Vector(g.getAngle(), g.getMagnitude()*myMass);
     		myAcceleration.sum(gravityForce);
     	}
     	if (v!=null)
     	{
-    		Vector viscuosityForce=new Vector(v.getMagnitude(), myAcceleration.getDirection());
+    		Vector viscuosityForce=new Vector(myAcceleration.getDirection()*-1, v.getMagnitude());
     		myAcceleration.sum(viscuosityForce);
     	}
         myAcceleration.sum(force);

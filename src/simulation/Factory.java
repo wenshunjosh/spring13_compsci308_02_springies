@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.swing.JFileChooser;
+
 
 /**
  * XXX
@@ -18,6 +20,7 @@ public class Factory {
     private static final String SPRING_KEYWORD = "spring";
     private static final String GRAVITY_KEYWORD="gravity";
     private static final String VISCUOSITY_KEYWORD="viscosity";
+    private static final JFileChooser INPUT_CHOOSER=new JFileChooser(System.getProperties().getProperty("user.dir"));
 
     // mass IDs
     Map<Integer, Mass> myMasses = new HashMap<Integer, Mass>();
@@ -26,7 +29,7 @@ public class Factory {
     /**
      * XXX.
      */
-    public void loadModel (Model model, File modelFile, File modelFile2) {
+    public void loadModel (Model model, File modelFile) {
         try {
             Scanner input = new Scanner(modelFile);
             while (input.hasNext()) {
@@ -47,12 +50,19 @@ public class Factory {
             // should not happen because File came from user selection
             e.printStackTrace();
         }
+        File environment;
+        int response=INPUT_CHOOSER.showOpenDialog(null);
+        while (response!=JFileChooser.APPROVE_OPTION)
+        {
+        	
+        }
+        environment=INPUT_CHOOSER.getSelectedFile();
         try {
-        	Scanner input =new Scanner(modelFile2);
+        	Scanner input =new Scanner(environment);
         	while (input.hasNextLine())
         	{
         		String line=input.nextLine();
-        		String[] commands=line.split("");
+        		String[] commands=line.split(" ");
         		if (commands[0].equals(GRAVITY_KEYWORD))
         		{
         			GravityForce g=new GravityForce(Double.parseDouble(commands[2]), Double.parseDouble(commands[1]));

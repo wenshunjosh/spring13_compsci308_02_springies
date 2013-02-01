@@ -23,7 +23,17 @@ public class Spring extends Sprite {
     private Mass myEnd;
     private double myLength;
     private double myK;
+    private GravityForce myGravity;
+    private ViscuosityForce myViscuosity;
 
+    public void setGravity(GravityForce g)
+    {
+    	myGravity=g;
+    }
+    public void setViscuosity(ViscuosityForce v)
+    {
+    	myViscuosity=v;
+    }
     /**
      * XXX.
      */
@@ -54,9 +64,9 @@ public class Spring extends Sprite {
         // apply hooke's law to each attached mass
         Vector force = new Vector(Vector.angleBetween(dx, dy), 
                                   myK * (myLength - Vector.distanceBetween(dx, dy)));
-        myStart.applyForce(force);
+        myStart.applyForce(force, myGravity, myViscuosity);
         force.negate();
-        myEnd.applyForce(force);
+        myEnd.applyForce(force, myGravity, myViscuosity);
         // update sprite values based on attached masses
         setCenter(getCenter(myStart, myEnd));
         setSize(getSize(myStart, myEnd));

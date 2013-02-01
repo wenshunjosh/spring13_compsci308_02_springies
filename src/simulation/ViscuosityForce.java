@@ -5,7 +5,7 @@ public class ViscuosityForce {
 
 	public ViscuosityForce(double magnitude) 
 	{
-		forceMagnitude=-1*magnitude;
+		forceMagnitude=magnitude;
 	}
 	public double getMagnitude()
 	{

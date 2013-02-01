@@ -44,6 +44,7 @@ public class Canvas extends JComponent {
     // only one so that it maintains user's preferences
     private static final JFileChooser INPUT_CHOOSER = 
             new JFileChooser(System.getProperties().getProperty("user.dir"));
+
     // input state
     public static final int NO_KEY_PRESSED = -1;
     public static final Point NO_MOUSE_PRESSED = null;
